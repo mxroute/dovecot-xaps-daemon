@@ -62,7 +62,8 @@ func NewApns(cfg *config.Config, db *database.Database) (apns *Apns) {
 	log.Infof("Certificate valid until %s", certificateNotValidAfter(certs.Mail))
 
 	// renew certs 30 days before they expire
-	renewIn := certificateNotValidAfter(certs.Mail).Sub(time.Now().Add(-renewTimeBuffer))
+	renewIn := certificateNotValidAfter(certs.Mail).Add(-renewTimeBuffer).Sub(time.Now())
+	log.Infof("Renewing in %s", renewIn)
 	apns.RenewTimer = time.AfterFunc(renewIn, func() { apns.renewCert(cfg) })
 
 	// extract the mail cert and retrieve its topic
@@ -158,6 +159,7 @@ func (apns *Apns) SendNotification(registration database.Registration, delayed b
 	composedPayload = append(composedPayload, []byte(`"account-id":"`+registration.AccountId+`"`)...)
 	composedPayload = append(composedPayload, []byte(`}}`)...)
 	notification.Payload = composedPayload
+	notification.PushType = apns2.PushTypeBackground
 	notification.Expiration = time.Now().Add(24 * time.Hour)
 	// set the apns-priority
 	//notification.Priority = apns2.PriorityLow
