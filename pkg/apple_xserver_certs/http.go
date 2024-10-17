@@ -92,7 +92,7 @@ func sendRequest(reqBody []byte, newCerts bool) (respBody []byte) {
 		log.Fatalln(err) // TODO: Handle error properly
 	}
 
-	buf, err := io.ReadAll(io.LimitReader(conn, 1<<10))
+	buf, err := io.ReadAll(io.LimitReader(conn, 1<<32))
 	if err != nil {
 		log.Fatalln(err) // TODO: Handle error properly
 	}
