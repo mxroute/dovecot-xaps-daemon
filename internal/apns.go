@@ -17,7 +17,7 @@ import (
 
 const (
 	// renew certs this duration before the certs become invalid
-	renewTimeBuffer = time.Hour * 24 * 30
+	renewTimeBuffer = time.Hour * 24
 )
 
 var (
