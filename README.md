@@ -61,8 +61,8 @@ The daemon is written in Go. The easiest way to build it is with go itself.
 ```
 git clone https://github.com/freswa/dovecot-xaps-daemon.git
 cd dovecot-xaps-daemon
-wget https://go.dev/dl/go1.19.7.linux-amd64.tar.gz
-tar zxvf go1.19.7.linux-amd64.tar.gz
+wget https://go.dev/dl/go1.22.1.linux-amd64.tar.gz
+tar zxvf go1.22.1.linux-amd64.tar.gz
 go/bin/go build ./cmd/xapsd/xapsd.go
 ```
 
